@@ -10,6 +10,7 @@ window.onload = function () {
   const randomIdx = Math.floor(Math.random() * wordDict.length);
   nowWord = wordDict[randomIdx];
   nowTryCount = CONSTANTS.TRY_COUNT;
+  document.getElementById("wordInput").setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 
   initEvent();
   makeTable();
@@ -25,9 +26,6 @@ function initEvent() {
         submitAnswer(wordInputValue.toUpperCase());
       }
       wordInput.value = '';
-    }
-    else {
-      wordInput.value = wordInputValue.substring(0, 5);
     }
   });
 }
@@ -47,12 +45,8 @@ function submitAnswer(inputWord) {
 }
 
 function chkValid(inputWord) {
-  // if(!onlyEnglish) {  // TODO: 영어 단어인지 체크 기능 추가
-  //   alert("영어 단어만 입력할 수 있습니다");
-  //   return false;
-  // }
-  if(inputWord.length !== 5) {
-    alert("단어 길이는 5글자여야 합니다");
+  if(inputWord.length !== CONSTANTS.WORD_LEN) {
+    alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
   }
   // if(!dictionary.includes(inputWord)) {  // TODO: 사전에 있는 단어인지 확인 기능 추가
@@ -65,7 +59,7 @@ function chkValid(inputWord) {
 
 function chkAnswer(inputWord) {
   const result = [];
-  for(let i = 0; i < nowWord.length; ++i) {
+  for(let i = 0; i < CONSTANTS.WORD_LEN; ++i) {
     if(nowWord[i] === inputWord[i]) {
       result.push(CONSTANTS.GREEN);
     }
@@ -93,12 +87,12 @@ function makeTable() {
   for(let i = 0; i < CONSTANTS.TRY_COUNT; ++i) {
     tableHTML += '<tr>';
     if(i < submittedWord.length) {
-      for(let j = 0; j < nowWord.length; ++j) {
+      for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
         tableHTML += `<td class=${CONSTANTS.TD_TYPE[submittedResult[i][j]]}>${submittedWord[i][j]}</td>`;
       }
     }
     else {
-      for(let j = 0; j < nowWord.length; ++j) {
+      for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
         tableHTML += `<td></td>`;
       }
     }
