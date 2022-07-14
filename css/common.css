@@ -1,0 +1,38 @@
+.title {
+  padding: 20px;
+  text-align: center;
+  font-size: xxx-large;
+  font-family: 'Titillium Web', sans-serif;
+}
+table {
+  margin-left:auto;
+  margin-right:auto;
+  text-align: center;
+  border-collapse: collapse;
+  /*width: 60%;*/
+}
+tr, td {
+  border: 1px solid black;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: xx-large;
+  font-weight: 700;
+  /*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
+}
+.wordInput {
+  text-align: center;
+}
+.greenTD {
+  color: white;
+  background: #6AAA64;
+}
+.yellowTD {
+  color: white;
+  background: #C9B458;
+}
+.grayTD {
+  color: white;
+  background: #787C7E;
+}
