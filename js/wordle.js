@@ -93,13 +93,11 @@ function makeTable() {
   let tableHTML = '<table>';
   for(let i = 0; i < CONSTANTS.TRY_COUNT; ++i) {
     tableHTML += '<tr>';
-    if(i < submittedWord.length) {
-      for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
+    for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
+      if(i < submittedWord.length) {
         tableHTML += `<td class=${CONSTANTS.TD_TYPE[submittedResult[i][j]]}>${submittedWord[i][j]}</td>`;
       }
-    }
-    else {
-      for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
+      else {
         tableHTML += `<td></td>`;
       }
     }
