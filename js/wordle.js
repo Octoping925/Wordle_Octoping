@@ -29,7 +29,6 @@ function initEvent() {
     else {
       wordInput.value = wordInputValue.substring(0, 5);
     }
-
   });
 }
 
