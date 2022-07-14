@@ -1,4 +1,4 @@
-import {CONSTANTS, wordDict} from "./config.js";
+import {CONSTANTS, wordDict, dictionary} from "./config.js";
 
 let nowWord;
 let nowTryCount;
@@ -60,10 +60,10 @@ function chkValid(inputWord) {
     alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
   }
-  // if(!dictionary.includes(inputWord)) {  // TODO: 사전에 있는 단어인지 확인 기능 추가
-  //   alert("사전에 있는 단어여야 합니다");
-  //   return false;
-  // }
+  if(!dictionary.includes(inputWord)) {
+    alert("사전에 있는 단어여야 합니다");
+    return false;
+  }
 
   return true;
 }
