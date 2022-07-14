@@ -1,23 +1,28 @@
 import {CONSTANTS, wordDict} from "./config.js";
 
 let nowWord;
-// nowWord = "HELLO"; //테스트용
 let nowTryCount;
-const submittedWord = [];
-const submittedResult = [];
+let submittedWord;
+let submittedResult;
 
 window.onload = function () {
-  const randomIdx = Math.floor(Math.random() * wordDict.length);
-  nowWord = wordDict[randomIdx];
-  nowTryCount = CONSTANTS.TRY_COUNT;
-  document.getElementById("wordInput").setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
-
+  initData();
   initEvent();
   makeTable();
 }
 
+function initData() {
+  const randomIdx = Math.floor(Math.random() * wordDict.length);
+  nowWord = wordDict[randomIdx];
+  nowTryCount = CONSTANTS.TRY_COUNT;
+  submittedWord = [];
+  submittedResult = [];
+}
+
 function initEvent() {
-  document.getElementById("wordInput").addEventListener("keyup", (e) => {
+  const wordInput = document.getElementById("wordInput");
+
+  wordInput.addEventListener("keyup", e => {
     const wordInput = document.getElementById("wordInput");
     const wordInputValue = wordInput.value;
 
@@ -28,6 +33,8 @@ function initEvent() {
       wordInput.value = '';
     }
   });
+
+  wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
 
 function submitAnswer(inputWord) {
@@ -45,7 +52,7 @@ function submitAnswer(inputWord) {
 }
 
 function chkValid(inputWord) {
-  if(inputWord.length !== CONSTANTS.WORD_LEN) {
+  if(inputWord.length < CONSTANTS.WORD_LEN) {
     alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
   }
