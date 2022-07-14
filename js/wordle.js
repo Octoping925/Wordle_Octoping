@@ -34,6 +34,10 @@ function initEvent() {
     }
   });
 
+  wordInput.addEventListener("input", e => {
+    wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '');
+  });
+
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
 
