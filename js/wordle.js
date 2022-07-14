@@ -27,7 +27,7 @@ function initEvent() {
     const wordInputValue = wordInput.value;
 
     if(e.keyCode === 13) {
-      if(chkValid(wordInputValue)) {
+      if(chkValidInput(wordInputValue)) {
         submitAnswer(wordInputValue.toUpperCase());
       }
       wordInput.value = '';
@@ -46,7 +46,7 @@ function submitAnswer(inputWord) {
   submittedResult.push(chkAnswer(inputWord));
   makeTable();
 
-  if(isItAnswer(inputWord)) {
+  if(isEqualToAnswer(inputWord)) {
     makeAlert("Success");
   }
 
@@ -55,7 +55,7 @@ function submitAnswer(inputWord) {
   }
 }
 
-function chkValid(inputWord) {
+function chkValidInput(inputWord) {
   if(inputWord.length < CONSTANTS.WORD_LEN) {
     alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
@@ -84,7 +84,7 @@ function chkAnswer(inputWord) {
   return result;
 }
 
-function isItAnswer(inputWord) {
+function isEqualToAnswer(inputWord) {
   return nowWord === inputWord;
 }
 
