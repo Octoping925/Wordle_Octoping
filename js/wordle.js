@@ -13,7 +13,7 @@ window.onload = function () {
 
 function initData() {
   const randomIdx = Math.floor(Math.random() * wordDict.length);
-  nowWord = wordDict[randomIdx];
+  nowWord = wordDict[randomIdx].toUpperCase();
   nowTryCount = CONSTANTS.TRY_COUNT;
   submittedWord = [];
   submittedResult = [];
@@ -38,6 +38,8 @@ function initEvent() {
     wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '');
   });
 
+  document.getElementById("copybutton").addEventListener("click", copyResult);
+
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
 
@@ -49,8 +51,7 @@ function submitAnswer(inputWord) {
   if(isEqualToAnswer(inputWord)) {
     makeAlert("Success");
   }
-
-  if(submittedWord.length === CONSTANTS.TRY_COUNT) {
+  else if(submittedWord.length === CONSTANTS.TRY_COUNT) {
     makeAlert("Fail");
   }
 }
@@ -110,4 +111,9 @@ function makeTable() {
   tableHTML += '</table>';
 
   document.getElementById("wordleTable").innerHTML = tableHTML;
+}
+
+function copyResult() {
+  const resultStr = submittedResult.map(submitResult => submitResult.map(x => CONSTANTS.ICON[x]).join('')).join('\n');
+  window.navigator.clipboard.writeText(resultStr);
 }
