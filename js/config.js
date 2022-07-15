@@ -7,9 +7,8 @@ export const CONSTANTS = {
   WORD_LEN: 5,
 };
 
-export const wordDict = ["HELLO"];
-
-export const dictionary = [
+export const wordDict = [
+  'korea',
   'which',
   'there',
   'their',

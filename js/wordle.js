@@ -1,4 +1,4 @@
-import {CONSTANTS, wordDict, dictionary} from "./config.js";
+import {CONSTANTS, wordDict} from "./config.js";
 
 let nowWord;
 let nowTryCount;
@@ -60,7 +60,7 @@ function chkValidInput(inputWord) {
     alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
   }
-  if(!dictionary.includes(inputWord)) {
+  if(!wordDict.includes(inputWord)) {
     alert("사전에 있는 단어여야 합니다");
     return false;
   }
