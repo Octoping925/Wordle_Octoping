@@ -4,14 +4,13 @@ import {Session} from "./session.js";
 let nowSession;
 
 window.onload = function () {
-  initData();
   initEvent();
-  makeTable();
+  gameStart();
 }
 
 function initData() {
   const randomIdx = Math.floor(Math.random() * wordDict.length);
-  const answer = wordDict[randomIdx].toUpperCase();
+  const answer = wordDict[randomIdx];
   nowSession = new Session(answer);
 }
 
@@ -23,7 +22,7 @@ function initEvent() {
     const wordInputValue = wordInput.value;
 
     if(e.keyCode === 13) {
-      game(wordInputValue);
+      game(wordInputValue.toUpperCase());
       wordInput.value = '';
     }
   });
@@ -37,14 +36,17 @@ function initEvent() {
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
 
-function game(inputWord) {
-  if(!chkValidInput(inputWord)) return;
+function gameStart() {
+  initData();
+  makeTable();
+}
 
-  inputWord = inputWord.toUpperCase();
+function game(inputWord) {
+  if(!chkInputValid(inputWord)) return;
   nowSession.submitAnswer(inputWord);
   makeTable();
 
-  if(nowSession.isEqualToAnswer(inputWord)) {
+  if(nowSession.isAnswer(inputWord)) {
     makeAlert("Success");
   }
   else if(nowSession.leftTryCount === 0) {
@@ -52,7 +54,7 @@ function game(inputWord) {
   }
 }
 
-function chkValidInput(inputWord) {
+function chkInputValid(inputWord) {
   if(inputWord.length < CONSTANTS.WORD_LEN) {
     alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
     return false;
