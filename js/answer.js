@@ -21,4 +21,8 @@ export class Answer {
         return CONSTANTS.GRAY;
     }
   }
+
+  getWord() {
+    return this.word;
+  }
 }

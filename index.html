@@ -5,6 +5,7 @@
   <script src="js/wordle.js" type="module"></script>
   <script src="js/session.js" type="module"></script>
   <script src="js/config.js" type="module"></script>
+  <script src="js/modal.js" type="module"></script>
   <link href="css/common.css" rel="stylesheet" type="text/css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,5 +18,18 @@
   <div id="wordleTable"></div>
   <div class="wordInput"><input id="wordInput" type="text"></div>
   <button id="copybutton">copyStatus</button>
+  <div class="modal" id="resultModal">
+    <div class="modalBody" id="resultModalBody">
+      <div id="resultModalsuccessStatus"></div>
+      <h2>The answer is..</h2>
+      <div id="resultModalBodyAnswer"></div>
+      <br><br>
+      <h2>Your Try Count</h2>
+      <div id="resultModalBodyTryCount"></div>
+      <br><br>
+      <button id="resultModalRestartButton">재시작</button>
+      <button id="resultModalResultCopyButton">결과 복사</button>
+    </div>
+  </div>
 </body>
 </html>

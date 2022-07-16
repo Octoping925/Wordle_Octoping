@@ -1,5 +1,6 @@
 import {CONSTANTS, wordDict} from "./config.js";
 import {Session} from "./session.js";
+import {toggleModal} from "./modal.js";
 
 let nowSession;
 
@@ -16,6 +17,7 @@ function initData() {
 
 function initEvent() {
   const wordInput = document.getElementById("wordInput");
+  const modal = document.getElementById("resultModal");
 
   wordInput.addEventListener("keyup", e => {
     const wordInput = document.getElementById("wordInput");
@@ -30,7 +32,24 @@ function initEvent() {
     wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '').toUpperCase();
   });
 
-  document.getElementById("copybutton").addEventListener("click", copyResult);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.classList.toggle('show');
+
+      if (!modal.classList.contains('show')) {
+        document.querySelector('body').style.overflow = 'auto';
+      }
+    }
+  });
+
+  document.getElementById("resultModalRestartButton").addEventListener('click', () => {
+    toggleModal(nowSession);
+    gameStart();
+  });
+
+  document.getElementById("resultModalResultCopyButton").addEventListener('click', copyResult);
+
+  document.getElementById("copybutton").addEventListener("click", ()=>toggleModal(nowSession));
 
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
@@ -38,6 +57,7 @@ function initEvent() {
 function gameStart() {
   initData();
   makeTable();
+  disableInput(false);
 }
 
 function game(inputWord) {
@@ -45,13 +65,9 @@ function game(inputWord) {
   nowSession.submitAnswer(inputWord);
   makeTable();
 
-  if(nowSession.isAnswer(inputWord)) {
-    makeAlert("Success");
+  if(nowSession.isGameEnd()) {
     disableInput(true);
-  }
-  else if(nowSession.leftTryCount === 0) {
-    makeAlert("Fail");
-    disableInput(true);
+    toggleModal(nowSession);
   }
 }
 

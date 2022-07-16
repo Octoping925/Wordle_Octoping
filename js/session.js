@@ -24,6 +24,15 @@ export class Session {
     return inputWord.split('').map((x, idx) => this.answer.getColor(x, idx));
   }
 
+  isGameEnd() {
+    return this.isWin() || this.leftTryCount === 0;
+  }
+
+  isWin() {
+    const lastSubmitWord = this.submittedWord[this.submittedWord.length - 1];
+    return this.isAnswer(lastSubmitWord);
+  }
+
   isAnswer(inputWord) {
     return this.answer.isEqual(inputWord);
   }
@@ -49,4 +58,7 @@ export class Session {
   getResultStr() {
     return this.submittedResult.map(submitResult => submitResult.map(x => CONSTANTS.ICON[x]).join('')).join('\n');
   }
+
+  getAnswer() {return this.answer.getWord();}
+  getSubmitCnt() {return this.submittedWord.length;}
 }
