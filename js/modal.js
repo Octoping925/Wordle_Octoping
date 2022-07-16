@@ -18,3 +18,12 @@ function setModalData(session) {
   document.getElementById("resultModalBodyAnswer").innerText = session.getAnswer();
   document.getElementById("resultModalBodyTryCount").innerText = session.getSubmitCnt();
 }
+
+export function makeToast(message) {
+  const toast = document.getElementById("toast");
+  const toastTime = 1500;
+  toast.classList.add("reveal");
+  toast.innerText = message;
+
+  setTimeout(() => toast.classList.remove("reveal"), toastTime);
+}

@@ -59,6 +59,6 @@ export class Session {
     return this.submittedResult.map(submitResult => submitResult.map(x => CONSTANTS.ICON[x]).join('')).join('\n');
   }
 
-  getAnswer() {return this.answer.getWord();}
+  getAnswer() {return this.answer.word;}
   getSubmitCnt() {return this.submittedWord.length;}
 }

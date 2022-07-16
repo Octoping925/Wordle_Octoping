@@ -1,6 +1,6 @@
 import {CONSTANTS, wordDict} from "./config.js";
 import {Session} from "./session.js";
-import {toggleModal} from "./modal.js";
+import {toggleModal, makeToast} from "./modal.js";
 
 let nowSession;
 
@@ -47,9 +47,12 @@ function initEvent() {
     gameStart();
   });
 
-  document.getElementById("resultModalResultCopyButton").addEventListener('click', copyResult);
+  document.getElementById("resultModalResultCopyButton").addEventListener('click', () => {
+    const resultStr = nowSession.getResultStr();
+    window.navigator.clipboard.writeText(resultStr);
+  });
 
-  document.getElementById("copybutton").addEventListener("click", ()=>toggleModal(nowSession));
+  document.getElementById("modalDebug").addEventListener("click", ()=>toggleModal(nowSession));
 
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
@@ -73,29 +76,19 @@ function game(inputWord) {
 
 function chkInputValid(inputWord) {
   if(inputWord.length < CONSTANTS.WORD_LEN) {
-    alert(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`);
+    makeToast(`단어 길이는 ${CONSTANTS.WORD_LEN}글자여야 합니다`)
     return false;
   }
   if(!wordDict.includes(inputWord)) {
-    alert("사전에 있는 단어여야 합니다");
+    makeToast("사전에 있는 단어여야 합니다");
     return false;
   }
 
   return true;
 }
 
-function makeAlert(alertStr) {
-  alert(alertStr);
-  // TODO: 게임 초기화 혹은 비활성화 기능 구현
-}
-
 function makeTable() {
   document.getElementById("wordleTable").innerHTML = nowSession.getWordleTableHTML();
-}
-
-function copyResult() {
-  const resultStr = nowSession.getResultStr();
-  window.navigator.clipboard.writeText(resultStr);
 }
 
 function disableInput(status) {

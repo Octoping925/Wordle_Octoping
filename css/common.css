@@ -36,6 +36,29 @@ tr, td {
   color: white;
   background: #787C7E;
 }
+.toast {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  padding: 15px 20px;
+  transform: translate(-50%, 10px);
+  border-radius: 30px;
+  overflow: hidden;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: large;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s, visibility .5s, transform .5s;
+  background: black;
+  color: #fff;
+  z-index: 10000;
+}
+
+.toast.reveal {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
 .modal {
   position: absolute;
   top: 0;
@@ -43,6 +66,7 @@ tr, td {
   width: 100%;
   height: 100%;
   display: none;
+  font-family: 'Titillium', sans-serif;
   background-color: rgba(0,0,0,0.4);
 }
 .modal.show {
