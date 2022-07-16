@@ -1,7 +1,7 @@
 import {CONSTANTS, wordDict} from "./config.js";
 
-let nowWord;
-let nowTryCount;
+let answerWord;
+let leftTryCount;
 let submittedWord;
 let submittedResult;
 
@@ -13,8 +13,8 @@ window.onload = function () {
 
 function initData() {
   const randomIdx = Math.floor(Math.random() * wordDict.length);
-  nowWord = wordDict[randomIdx].toUpperCase();
-  nowTryCount = CONSTANTS.TRY_COUNT;
+  answerWord = wordDict[randomIdx].toUpperCase();
+  leftTryCount = CONSTANTS.TRY_COUNT;
   submittedWord = [];
   submittedResult = [];
 }
@@ -27,14 +27,12 @@ function initEvent() {
     const wordInputValue = wordInput.value;
 
     if(e.keyCode === 13) {
-      if(chkValidInput(wordInputValue)) {
-        submitAnswer(wordInputValue.toUpperCase());
-      }
+      game(wordInputValue);
       wordInput.value = '';
     }
   });
 
-  wordInput.addEventListener("input", e => {
+  wordInput.addEventListener("input", () => {
     wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '');
   });
 
@@ -43,17 +41,25 @@ function initEvent() {
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
 }
 
-function submitAnswer(inputWord) {
-  submittedWord.push(inputWord);
-  submittedResult.push(chkAnswer(inputWord));
+function game(inputWord) {
+  if(!chkValidInput(inputWord)) return;
+
+  inputWord = inputWord.toUpperCase();
+  submitAnswer(inputWord);
   makeTable();
 
   if(isEqualToAnswer(inputWord)) {
     makeAlert("Success");
   }
-  else if(submittedWord.length === CONSTANTS.TRY_COUNT) {
+  else if(leftTryCount === 0) {
     makeAlert("Fail");
   }
+}
+
+function submitAnswer(inputWord) {
+  submittedWord.push(inputWord);
+  submittedResult.push(chkAnswer(inputWord));
+  --leftTryCount;
 }
 
 function chkValidInput(inputWord) {
@@ -72,10 +78,10 @@ function chkValidInput(inputWord) {
 function chkAnswer(inputWord) {
   const result = [];
   for(let i = 0; i < CONSTANTS.WORD_LEN; ++i) {
-    if(nowWord[i] === inputWord[i]) {
+    if(answerWord[i] === inputWord[i]) {
       result.push(CONSTANTS.GREEN);
     }
-    else if(nowWord.includes(inputWord[i])) {
+    else if(answerWord.includes(inputWord[i])) {
       result.push(CONSTANTS.YELLOW);
     }
     else {
@@ -86,7 +92,7 @@ function chkAnswer(inputWord) {
 }
 
 function isEqualToAnswer(inputWord) {
-  return nowWord === inputWord;
+  return answerWord === inputWord;
 }
 
 function makeAlert(alertStr) {
