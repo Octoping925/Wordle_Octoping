@@ -13,12 +13,6 @@ export function toggleModal(session) {
   }
 }
 
-function setModalData(session) {
-  document.getElementById("resultModalsuccessStatus").innerHTML = session.isWin() ? successTitleHTML : failTitleHTML;
-  document.getElementById("resultModalBodyAnswer").innerText = session.getAnswer();
-  document.getElementById("resultModalBodyTryCount").innerText = session.getSubmitCnt();
-}
-
 export function makeToast(message) {
   const toast = document.getElementById("toast");
   const toastTime = 1500;
@@ -27,3 +21,10 @@ export function makeToast(message) {
 
   setTimeout(() => toast.classList.remove("reveal"), toastTime);
 }
+
+function setModalData(session) {
+  document.getElementById("resultModalsuccessStatus").innerHTML = session.isWin() ? successTitleHTML : failTitleHTML;
+  document.getElementById("resultModalBodyAnswer").innerText = session.getAnswer();
+  document.getElementById("resultModalBodyTryCount").innerText = session.getSubmitCnt();
+}
+

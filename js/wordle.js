@@ -52,9 +52,8 @@ function initEvent() {
     window.navigator.clipboard.writeText(resultStr);
   });
 
-  document.getElementById("modalDebug").addEventListener("click", ()=>toggleModal(nowSession));
-
   wordInput.setAttribute("maxlength", `${CONSTANTS.WORD_LEN}`);
+  // document.getElementById("modalDebug").addEventListener("click", ()=>toggleModal(nowSession));
 }
 
 function gameStart() {
