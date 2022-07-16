@@ -24,8 +24,8 @@ export class Session {
         return inputWord.split('').map((x, idx) => this.answer.getColor(x, idx));
     }
 
-    isEqualToAnswer(inputWord) {
-        return this.answer === inputWord;
+    isAnswer(inputWord) {
+        return this.answer.isEqual(inputWord);
     }
 
     getWordleTableHTML() {

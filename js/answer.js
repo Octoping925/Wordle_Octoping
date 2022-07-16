@@ -7,6 +7,10 @@ export class Answer {
         this.word = word;
     }
 
+    isEqual(word) {
+        return this.word === word;
+    }
+
     getColor(char, idx) {
         switch(true) {
             case this.word[idx] === char:
