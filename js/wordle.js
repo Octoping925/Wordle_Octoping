@@ -19,16 +19,15 @@ function initEvent() {
 
   wordInput.addEventListener("keyup", e => {
     const wordInput = document.getElementById("wordInput");
-    const wordInputValue = wordInput.value;
 
-    if(e.keyCode === 13) {
-      game(wordInputValue.toUpperCase());
+    if(e.key === "Enter") {
+      game(wordInput.value);
       wordInput.value = '';
     }
   });
 
   wordInput.addEventListener("input", () => {
-    wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '');
+    wordInput.value = wordInput.value.replace(/[^A-Za-z]/ig, '').toUpperCase();
   });
 
   document.getElementById("copybutton").addEventListener("click", copyResult);
@@ -48,9 +47,11 @@ function game(inputWord) {
 
   if(nowSession.isAnswer(inputWord)) {
     makeAlert("Success");
+    disableInput(true);
   }
   else if(nowSession.leftTryCount === 0) {
     makeAlert("Fail");
+    disableInput(true);
   }
 }
 
@@ -79,4 +80,8 @@ function makeTable() {
 function copyResult() {
   const resultStr = nowSession.getResultStr();
   window.navigator.clipboard.writeText(resultStr);
+}
+
+function disableInput(status) {
+  document.getElementById("wordInput").disabled = status;
 }
