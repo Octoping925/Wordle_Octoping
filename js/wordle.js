@@ -1,9 +1,7 @@
 import {CONSTANTS, wordDict} from "./config.js";
+import {Session} from "./session.js";
 
-let answerWord;
-let leftTryCount;
-let submittedWord;
-let submittedResult;
+let nowSession;
 
 window.onload = function () {
   initData();
@@ -13,10 +11,8 @@ window.onload = function () {
 
 function initData() {
   const randomIdx = Math.floor(Math.random() * wordDict.length);
-  answerWord = wordDict[randomIdx].toUpperCase();
-  leftTryCount = CONSTANTS.TRY_COUNT;
-  submittedWord = [];
-  submittedResult = [];
+  const answer = wordDict[randomIdx].toUpperCase();
+  nowSession = new Session(answer);
 }
 
 function initEvent() {
@@ -45,21 +41,15 @@ function game(inputWord) {
   if(!chkValidInput(inputWord)) return;
 
   inputWord = inputWord.toUpperCase();
-  submitAnswer(inputWord);
+  nowSession.submitAnswer(inputWord);
   makeTable();
 
-  if(isEqualToAnswer(inputWord)) {
+  if(nowSession.isEqualToAnswer(inputWord)) {
     makeAlert("Success");
   }
-  else if(leftTryCount === 0) {
+  else if(nowSession.leftTryCount === 0) {
     makeAlert("Fail");
   }
-}
-
-function submitAnswer(inputWord) {
-  submittedWord.push(inputWord);
-  submittedResult.push(chkAnswer(inputWord));
-  --leftTryCount;
 }
 
 function chkValidInput(inputWord) {
@@ -75,51 +65,16 @@ function chkValidInput(inputWord) {
   return true;
 }
 
-function chkAnswer(inputWord) {
-  const result = [];
-  for(let i = 0; i < CONSTANTS.WORD_LEN; ++i) {
-    if(answerWord[i] === inputWord[i]) {
-      result.push(CONSTANTS.GREEN);
-    }
-    else if(answerWord.includes(inputWord[i])) {
-      result.push(CONSTANTS.YELLOW);
-    }
-    else {
-      result.push(CONSTANTS.GRAY);
-    }
-  }
-  return result;
-}
-
-function isEqualToAnswer(inputWord) {
-  return answerWord === inputWord;
-}
-
 function makeAlert(alertStr) {
   alert(alertStr);
   // TODO: 게임 초기화 혹은 비활성화 기능 구현
 }
 
 function makeTable() {
-  let tableHTML = '<table>';
-  for(let i = 0; i < CONSTANTS.TRY_COUNT; ++i) {
-    tableHTML += '<tr>';
-    for(let j = 0; j < CONSTANTS.WORD_LEN; ++j) {
-      if(i < submittedWord.length) {
-        tableHTML += `<td class=${CONSTANTS.TD_TYPE[submittedResult[i][j]]}>${submittedWord[i][j]}</td>`;
-      }
-      else {
-        tableHTML += `<td></td>`;
-      }
-    }
-    tableHTML += '</tr>';
-  }
-  tableHTML += '</table>';
-
-  document.getElementById("wordleTable").innerHTML = tableHTML;
+  document.getElementById("wordleTable").innerHTML = nowSession.getWordleTableHTML();
 }
 
 function copyResult() {
-  const resultStr = submittedResult.map(submitResult => submitResult.map(x => CONSTANTS.ICON[x]).join('')).join('\n');
+  const resultStr = nowSession.getResultStr();
   window.navigator.clipboard.writeText(resultStr);
 }
